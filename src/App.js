@@ -1,42 +1,25 @@
-console.log("app is running!");
+import SearchBar from './components/SearchBar.js';
+import SearchResult from './components/SearchResult.js';
+import { api } from './api/api.js';
 
-class App {
-  $target = null;
-  data = [];
+export default class App {
+  constructor(){
+    console.log("App is created");
 
-  constructor($target) {
-    this.$target = $target;
+    const top = document.createElement('div');
+    top.className = 'top';
 
-    this.searchInput = new SearchInput({
-      $target,
-      onSearch: keyword => {
-        api.fetchCats(keyword).then(({ data }) => this.setState(data));
-      }
+    const bottom = document.createElement('div');
+    bottom.className = 'bottom';
+
+    const searchBar = new SearchBar(top, keyword => {
+      api.fetchImage(keyword).then(data => {
+        SearchResult.updateData(data);
+      });
     });
 
-    this.searchResult = new SearchResult({
-      $target,
-      initialData: this.data,
-      onClick: image => {
-        this.imageInfo.setState({
-          visible: true,
-          image
-        });
-      }
-    });
-
-    this.imageInfo = new ImageInfo({
-      $target,
-      data: {
-        visible: false,
-        image: null
-      }
-    });
-  }
-
-  setState(nextData) {
-    console.log(this);
-    this.data = nextData;
-    this.searchResult.setState(nextData);
+    const searchResult = new SearchResult(bottom);
+    document.body.appendChild(top);
+    document.body.appendChild(bottom);
   }
 }
