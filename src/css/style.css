@@ -116,6 +116,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgb(255, 255, 255, 0.7);
 }
 
 .spinner-image {
@@ -123,6 +124,24 @@
   height: 300px;
   border-radius: 49%;
 }
+
+.noticeSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.notice {
+  margin-top: 8%;
+  text-align: center;
+}
+
+.notice-image {
+  height: 300px;
+  width: 350px;
+}
+
   /* dark mode 처리
   @media (prefers-color-scheme: dark) {
     body {
