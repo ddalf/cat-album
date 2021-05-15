@@ -1,6 +1,7 @@
 
 import { api } from './api/api.js';
 import DetailModal from './components/DetailModal.js';
+import Loading from './components/Loading.js';
 import ResultSection from './components/ResultSection.js';
 import SearchingSection from './components/SearchingSection.js';
 
@@ -10,11 +11,15 @@ export default class App {
     const searchingSection = new SearchingSection({
       $target,
       onSearch: keyword =>{
+        loading.toggleSpinner();
         api.fetchCats(keyword).then(data => {
+          loading.toggleSpinner();
           resultSection.setState(data);});
       },
       onRandom: () =>{
+        loading.toggleSpinner();
         api.fetchRandomCats().then(data => {
+          loading.toggleSpinner();
           resultSection.setState(data);
         });
       }
@@ -26,6 +31,8 @@ export default class App {
     const detailModal = new DetailModal({
       $target
     });
+
+    const loading = new Loading({$target});
 
     this.focusOnSearchBox();
   }
