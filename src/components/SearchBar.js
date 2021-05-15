@@ -1,7 +1,8 @@
 export default class SearchBar{
-    constructor($target, onSearch){
+    constructor($target, onSearch, onRandom){
         this.$target = $target;
         this.onSearch = onSearch;
+        this.onRandom = onRandom;
         this.render();
     }
 
@@ -11,16 +12,26 @@ export default class SearchBar{
         const wrapper = document.createElement('div');
         wrapper.className = 'wrapper';
 
+        const randomBtn = document.createElement('button');
+        randomBtn.className = 'random-btn';
+        randomBtn.innerText = 'RANDOM';
+
         const searchBox = document.createElement('input');
         searchBox.className = 'search-box';
         searchBox.placeholder = '고양이를 검색하세요';
+
+        randomBtn.addEventListener('click', e => {
+            this.onRandom();
+        });
+
         searchBox.addEventListener('keyup', e =>{
             if(e.keyCode == 13){
-                const keyword = searchBox.valuel
+                const keyword = searchBox.value;
                 this.onSearch(keyword);
             }
         })
 
+        wrapper.appendChild(randomBtn);
         wrapper.appendChild(searchBox);
         this.$target.appendChild(wrapper);
     }
